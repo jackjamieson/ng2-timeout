@@ -28,7 +28,7 @@ import { TimeoutModule } from 'ng2-timeout';
   ],
   imports: [
     BrowserModule,
-    TimeoutModule
+    TimeoutModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -41,6 +41,8 @@ From there you can control what causes interrruptions to the timers and how you 
 
 ```typescript
 import { IdleService } from '../ng2-timeout';
+
+private idleState: string; // if you want to show the countdown for example
 
 constructor( private idleService: IdleService ) {
 
@@ -69,7 +71,7 @@ Here is an example `@HostListener` for detecting keypress
 @HostListener('document:keypress', ['$event'])
 handleKeyboardEvent(event: KeyboardEvent) {
   this.idleService.interruptIdle(); // interrupt the idle countdown and reset the timer if a key was pressed
-  this.idleService.interruptTimeout(); // for illustration purposed we can also reset the timeout when a key is pressed
+  this.idleService.interruptTimeout(); // for illustration purposes we can also reset the timeout when a key is pressed
 
 }
 ```
