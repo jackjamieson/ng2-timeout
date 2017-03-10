@@ -1,0 +1,46 @@
+{
+  "name": "ng2-timeout",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "ngc -p tsconfig.json",
+    "lint": "tslint --type-check --project tsconfig.json src/**/*.ts",
+    "test": "tsc && karma start",
+    "prepublish": "tsc",
+    "tsc": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jackjamieson/ng2-timeout"
+  },
+  "author": {
+    "name": "Jack Jamieson",
+    "email": "jack.jamieson@doh.nj.gov"
+  },
+  "keywords": [
+    "angular"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jackjamieson/ng2-timeout/issues"
+  },
+  "main": "./dist/index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@angular/common": "^2.4.9",
+    "@angular/compiler": "^2.4.9",
+    "@angular/compiler-cli": "^2.4.9",
+    "@angular/core": "^2.4.9",
+    "@angular/platform-browser": "^2.4.9",
+    "@angular/platform-server": "^2.4.9",
+    "@types/es6-shim": "^0.31.32",
+    "@types/selenium-webdriver": "^2.53.39",
+    "codelyzer": "^3.0.0-beta.0",
+    "rxjs": "^5.1.0",
+    "tslint": "^4.5.1",
+    "typescript": "~2.0.3",
+    "zone.js": "0.7.2"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}
