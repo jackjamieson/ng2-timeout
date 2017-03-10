@@ -9,15 +9,9 @@ To install this library, run:
 $ npm install ng2-timeout --save
 ```
 
-## Consuming your library
+## Consuming library
 
-Once you have published your library to npm, you can import your library in any Angular application by running:
-
-```bash
-$ npm install ng2-timeout
-```
-
-and then from your Angular `AppModule`:
+Import library in any Angular application from your Angular `AppModule`:
 
 ```typescript
 import { BrowserModule } from '@angular/platform-browser';
@@ -25,8 +19,8 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-// Import your library
-import { SampleModule } from 'ng2-timeout';
+// Import library
+import { TimeoutModule } from 'ng2-timeout';
 
 @NgModule({
   declarations: [
@@ -34,9 +28,7 @@ import { SampleModule } from 'ng2-timeout';
   ],
   imports: [
     BrowserModule,
-
-    // Specify your library as an import
-    LibraryModule
+    TimeoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -44,15 +36,45 @@ import { SampleModule } from 'ng2-timeout';
 export class AppModule { }
 ```
 
-Once your library is imported, you can use its components, directives and pipes in your Angular application:
+To use the module I recommend injecting the service into your top level app component.  
+From there you can control what causes interrruptions to the timers and how you want to handle idle or timeout.
 
-```xml
-<!-- You can now use your library component in app.component.html -->
-<h1>
-  {{title}}
-</h1>
-<sampleComponent></sampleComponent>
+```typescript
+import { IdleService } from '../ng2-timeout';
+
+constructor( private idleService: IdleService ) {
+
+  this.idleService.setTimeToIdle(60 * 10); // 10 minutes of no interrupts will set the user to idle
+  this.idleService.setTimeToTimeout(60); // 1 minute of no timeout interrupts will set the user as timed out
+
+  // subscribe to the idle observable
+  this.idleService.watchIdle().subscribe((isIdle: boolean) => {
+    if (isIdle) {
+      //  do something if the user becomes idle
+    }
+  });
+
+  this.idleService.watchTimeout().subscribe((countdown: string) => {
+    this.idleState = countdown;
+    if(countdown <= 0){
+      // do something about the timeout
+    }
+  });
+}
 ```
+
+Here is an example `@HostListener` for detecting keypress
+
+```typescript
+@HostListener('document:keypress', ['$event'])
+handleKeyboardEvent(event: KeyboardEvent) {
+  this.idleService.interruptIdle(); // interrupt the idle countdown and reset the timer if a key was pressed
+  this.idleService.interruptTimeout(); // for illustration purposed we can also reset the timeout when a key is pressed
+
+}
+```
+
+
 
 ## Development
 
