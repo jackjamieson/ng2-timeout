@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
+import sEmitter from 'storage-emitter';
+
 @Injectable()
 export class IdleService {
 
@@ -20,10 +22,26 @@ export class IdleService {
 
     // set initial end time to now + time until user is considered idle
     this.timeend = Math.floor(new Date().getTime() / 1000) + this.timeToIdle + 1;
+
+    // listen for the interrupt across browser tabs
+    sEmitter.on('idle-interrupt', () => {
+      if (!this.isIdle) {
+        this.timeend = Math.floor(new Date().getTime() / 1000) + this.timeToIdle + 1;
+      }
+    });
+
+    // listen for the timeout interrupt across browser tabs
+    sEmitter.on('timeout-interrupt', () => {
+      this.isIdle = false;
+      this.timeend = Math.floor(new Date().getTime() / 1000) + this.timeToIdle + 1;
+    });
   }
+
+
 
   // lets you perform actions after the user is deemed idle
   watchIdle(): Observable<boolean> {
+
     let timer = Observable.interval(1000).map((x) => {
 
       this.timestart = Math.floor(new Date().getTime() / 1000);
@@ -54,6 +72,7 @@ export class IdleService {
     // you can only interrupt the idle check if you are not already idle
     if (!this.isIdle) {
       this.timeend = Math.floor(new Date().getTime() / 1000) + this.timeToIdle + 1;
+      sEmitter.emit('idle-interrupt');
     }
   }
 
@@ -61,6 +80,7 @@ export class IdleService {
   interruptTimeout(): void {
     this.isIdle = false;
     this.timeend = Math.floor(new Date().getTime() / 1000) + this.timeToIdle + 1;
+    sEmitter.emit('timeout-interrupt');
   }
 
   // set the time in seconds to declare the user is idle

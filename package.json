@@ -24,7 +24,9 @@
     "url": "https://github.com/jackjamieson/ng2-timeout/issues"
   },
   "main": "./dist/index.js",
-  "dependencies": {},
+  "dependencies": {
+    "storage-emitter": "^2.0.1"
+  },
   "devDependencies": {
     "@angular/common": "^2.4.9",
     "@angular/compiler": "^2.4.9",

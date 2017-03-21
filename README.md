@@ -58,7 +58,7 @@ constructor( private idleService: IdleService ) {
 
   this.idleService.watchTimeout().subscribe((countdown: string) => {
     this.idleState = countdown;
-    if(countdown <= 0){
+    if(+countdown <= 0){
       // do something about the timeout
     }
   });
