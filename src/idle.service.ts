@@ -1,3 +1,5 @@
+/// <reference path="./../index.d.ts"/>
+
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
@@ -17,6 +19,7 @@ export class IdleService {
   private timeend: number;
 
   constructor() {
+
     this.timeToIdle = 60 * 20; // default 20 min
     this.timeToTimeout = 60 * 1; // default timeout 1 min
 
@@ -92,5 +95,7 @@ export class IdleService {
   setTimeToTimeout(time: number): void {
     this.timeToTimeout = time;
   }
+
+
 
 }

@@ -1,5 +1,5 @@
 # ng2-timeout
-Creates observables for user idle and timeout with manual interrupts.
+Creates observables for user idle and timeout with manual interrupts.  Detects interrupts across browser tabs with [storage-emitter](https://github.com/alekseykulikov/storage-emitter).
 
 ## Installation
 
