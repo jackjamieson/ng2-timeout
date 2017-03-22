@@ -1,0 +1,1 @@
+/// <reference path="./@types/storage-emitter/index.d.ts"/>
